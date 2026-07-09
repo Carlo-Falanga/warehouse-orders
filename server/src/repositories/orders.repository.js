@@ -16,7 +16,7 @@ const statements = {
   findAll: db.prepare(`
         SELECT * FROM orders ORDER BY created_at DESC, id DESC
     `),
-  findByID: db.prepare(`
+  findById: db.prepare(`
         SELECT * FROM orders WHERE id = ?    
     `),
   insert: db.prepare(`
