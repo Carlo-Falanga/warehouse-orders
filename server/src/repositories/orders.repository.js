@@ -32,3 +32,25 @@ const statements = {
         DELETE FROM orders WHERE id = ?    
     `),
 };
+
+export function findAll() {
+  return statements.findAll.all().map(toOrder);
+}
+
+export function findById(id) {
+  return toOrder(statements.findById.get(id));
+}
+
+export function create(data) {
+  const info = statements.insert.run(data);
+  return findById(info.lastInsertRowid);
+}
+
+export function update(id, data) {
+  const info = statements.update.run({ ...data, id });
+  return info.changes === 0 ? undefined : findById(id);
+}
+
+export function remove(id){
+    return statements.remove.run(id).changes > 0;
+}

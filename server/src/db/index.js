@@ -11,18 +11,17 @@ db.pragma("journal_mode = WAL");
 
 export function initDb() {
   db.exec(`
-        
-    CREATE TABLE IF NOT EXISTS orders (
-      id           INTEGER PRIMARY KEY AUTOINCREMENT,
-      code         TEXT    NOT NULL UNIQUE,
-      product_name TEXT    NOT NULL,
-      quantity     INTEGER NOT NULL CHECK (quantity > 0),
-      priority     TEXT    NOT NULL CHECK (priority IN ('Alta', 'Media', 'Bassa')),
-      created_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+        CREATE TABLE IF NOT EXISTS orders (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        code         TEXT    NOT NULL UNIQUE,
+        product_name TEXT    NOT NULL,
+        quantity     INTEGER NOT NULL CHECK (quantity > 0),
+        priority     TEXT    NOT NULL CHECK (priority IN ('Alta', 'Media', 'Bassa')),
+        created_at   TEXT    NOT NULL DEFAULT (datetime('now'))
         );
     `);
 }
 
 initDb();
 
-export default db
+export default db;
