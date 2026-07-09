@@ -1,6 +1,5 @@
-import db, { initDb } from "./index.js";
+import db from "./index.js";
 
-initDb();
 
 const orders = [
   {
