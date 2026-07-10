@@ -1,4 +1,9 @@
 node_modules/
+
+# SQLite database e file WAL/SHM 
 *.db
+*.db-shm
+*.db-wal
+
 .env
 dist/
