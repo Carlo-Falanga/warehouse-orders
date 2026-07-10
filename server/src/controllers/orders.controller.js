@@ -1,4 +1,4 @@
-import * as ordersRepository from "../repositories/orders.repository";
+import * as ordersRepository from "../repositories/orders.repository.js";
 
 function parseId(rawId) {
   const id = Number(rawId);
