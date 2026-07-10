@@ -15,7 +15,7 @@ export function getOrderById(req, res) {
   if (id === null) {
     return res
       .status(400)
-      .json({ error: "Invalid id: must be positive integer" });
+      .json({ error: 'Invalid id: must be positive integer' });
   }
 
   const order = ordersRepository.findById(id);
@@ -26,4 +26,22 @@ export function getOrderById(req, res) {
   res.json(order);
 }
 
+export function createOrder(req, res) {
+  const created = ordersRepository.create(req.body);
 
+  res.status(201).json(created);
+}
+
+export function updateOrder(req, res) {
+    const id = parseId(req.params.id);
+    if (id === null){
+        return res.status(400).json({ error: 'Invalid id: must be positive integer' });
+    }
+
+    const updated = ordersRepository.update(id, req.body);
+    if (!updated){
+        return res.status(404).json({ error: `Order ${id} not found` });
+    }
+
+    res.json(updated);
+}
