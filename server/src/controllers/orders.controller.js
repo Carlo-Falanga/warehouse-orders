@@ -45,3 +45,17 @@ export function updateOrder(req, res) {
 
     res.json(updated);
 }
+
+export function deleteOrder(req, res){
+    const id = parseId(req.params.id);
+    if (id === null) {
+        return res.status(400).json({ error: 'Invalid id: must be positive integer' });
+    }
+
+    const deleted = ordersRepository.remove(id);
+    if (!deleted){
+        return res.status(404).json({ error: `order ${id} not found` });
+    }
+
+    res.status(204).end();
+}
