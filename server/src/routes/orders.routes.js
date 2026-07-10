@@ -6,8 +6,8 @@ const router = Router();
 router.get('/', ordersController.getAllOrders);
 router.post('/', ordersController.createOrder);
 
-router.get('/id', ordersController.getOrderById);
-router.put('/id', ordersController.updateOrder);
-router.delete('/id', ordersController.deleteOrder);
+router.get('/:id', ordersController.getOrderById);
+router.put('/:id', ordersController.updateOrder);
+router.delete('/:id', ordersController.deleteOrder);
 
 export default router
