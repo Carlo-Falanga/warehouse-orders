@@ -11,7 +11,7 @@ export function errorHandler(err, req, res, next) {
   if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
     return res
       .status(409)
-      .json({ error: "An order with this id already exists" });
+      .json({ error: "An order with this code already exists" });
   }
 
   // controllo se il vincolo CHECK dato a quantity ed a priority e' stato violato
