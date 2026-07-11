@@ -1,3 +1,5 @@
+import { ZodError } from "zod";
+
 // Intercetto qualsiasi richiesta che non ha trovato una route
 export function notFoundHandler(req, res) {
   res
@@ -7,6 +9,16 @@ export function notFoundHandler(req, res) {
 
 // Error handler centralizzato
 export function errorHandler(err, req, res, next) {
+  if (err instanceof ZodError) {
+    return res.status(400).json({
+      error: "Validation failed",
+      details: err.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    });
+  }
+
   // controllo se il vincolo UNIQUE dato a code e' stato violato
   if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
     return res
