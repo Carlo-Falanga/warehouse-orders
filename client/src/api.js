@@ -6,7 +6,14 @@ async function request(path, options) {
     ...options,
   });
 
-  return res.json;
+  if (!res.ok) throw await parseError(res);
+  if (res.status === 204) return null;
+  return res.json();
 }
 
-
+async function parseError(res) {
+  const body = await res.json();
+  const error = new Error(body.error);
+  error.detail = body.detail;
+  return error;
+}
