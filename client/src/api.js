@@ -14,7 +14,7 @@ async function request(path, options) {
 async function parseError(res) {
   const body = await res.json();
   const error = new Error(body.error);
-  error.detail = body.detail;
+  error.details = body.details;
   return error;
 }
 
