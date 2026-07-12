@@ -25,6 +25,11 @@ function App() {
     <>
       <div>
         <h1>Ordini di magazzino</h1>
+
+        {loading && <p>Caricamento ordini</p>}
+        
+        {error && <p>Errore: {error}</p>}
+
         <table>
           <thead>
             <tr>
