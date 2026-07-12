@@ -17,3 +17,25 @@ async function parseError(res) {
   error.detail = body.detail;
   return error;
 }
+
+export function getOrders() {
+  return request("/orders");
+}
+
+export function createOrder(data) {
+  return request("/orders", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function updateOrder(id, data) {
+  return request(`/orders/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+
+export function deleteOrder(id) {
+  return request(`/orders/${id}`, { method: "DELETE" });
+}
