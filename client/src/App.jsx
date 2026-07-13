@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createOrder, getOrders } from "./api";
+import { createOrder, deleteOrder, getOrders } from "./api";
 
 function App() {
   const [orders, setOrders] = useState([]);
@@ -44,6 +44,15 @@ function App() {
     }
   }
 
+  async function handleDelete(id) {
+    try {
+      await deleteOrder(id);
+      setOrders((prev) => prev.filter((order) => order.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <>
       <div>
@@ -72,6 +81,7 @@ function App() {
               <th>Prodotto</th>
               <th>Quantita'</th>
               <th>Priorita'</th>
+              <th>Azioni</th>
             </tr>
           </thead>
 
@@ -82,6 +92,11 @@ function App() {
                 <td>{order.productName}</td>
                 <td>{order.quantity}</td>
                 <td>{order.priority}</td>
+                <td>
+                  <button onClick={() => handleDelete(order.id)}>
+                    Elimina
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
