@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createOrder, deleteOrder, getOrders, updateOrder } from "./api";
 import OrderForm from "./components/OrderForm";
-
+import OrderFilters from "./components/OrderFilters";
 function App() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -85,24 +85,14 @@ function App() {
       <div>
         <h1>Ordini di magazzino</h1>
 
-        <OrderForm onSubmit={handleSubmit} error={formError}/>
+        <OrderForm onSubmit={handleSubmit} error={formError} />
 
-        <div>
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cerca per codice"
-          />
-          <select
-            value={priorityFilter}
-            onChange={(e) => setPriorityFilter(e.target.value)}
-          >
-            <option value="">Tutte le priorità</option>
-            <option value="Alta">Alta</option>
-            <option value="Media">Media</option>
-            <option value="Bassa">Bassa</option>
-          </select>
-        </div>
+        <OrderFilters
+          search={search}
+          priorityFilter={priorityFilter}
+          onSearchChange={setSearch}
+          onPriorityChange={setPriorityFilter}
+        />
 
         {loading && <p>Caricamento ordini</p>}
 
