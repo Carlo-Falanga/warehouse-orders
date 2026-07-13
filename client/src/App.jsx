@@ -59,10 +59,10 @@ function App() {
         code: order.code,
         productName: order.productName,
         quantity: order.quantity,
-        priority: order.priority,
+        priority: newPriority,
       });
       setOrders((prev) =>
-        prev.map((element) => (order.id === order.id ? updated : order)),
+        prev.map((element) => (element.id === order.id ? updated : element)),
       );
     } catch (err) {
       setError(err.message);
