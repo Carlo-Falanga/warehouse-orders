@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createOrder, deleteOrder, getOrders } from "./api";
+import { createOrder, deleteOrder, getOrders, updateOrder } from "./api";
 
 function App() {
   const [orders, setOrders] = useState([]);
@@ -53,6 +53,22 @@ function App() {
     }
   }
 
+  async function handlePriorityChange(order, newPriority) {
+    try {
+      const updated = await updateOrder(order.id, {
+        code: order.code,
+        productName: order.productName,
+        quantity: order.quantity,
+        priority: order.priority,
+      });
+      setOrders((prev) =>
+        prev.map((element) => (order.id === order.id ? updated : order)),
+      );
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <>
       <div>
@@ -91,7 +107,19 @@ function App() {
                 <td>{order.code}</td>
                 <td>{order.productName}</td>
                 <td>{order.quantity}</td>
-                <td>{order.priority}</td>
+                <td>
+                  <select
+                    value={order.priority}
+                    onChange={(e) =>
+                      handlePriorityChange(order, e.target.value)
+                    }
+                  >
+
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Bassa">Bassa</option>
+                  </select>
+                </td>
                 <td>
                   <button onClick={() => handleDelete(order.id)}>
                     Elimina
