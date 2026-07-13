@@ -6,6 +6,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formError, setFormError] = useState(null);
+  const [search, setSearch] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
 
   useEffect(() => {
     async function loadOrders() {
@@ -69,6 +71,14 @@ function App() {
     }
   }
 
+  const visibleOrders = orders.filter((order) => {
+    const matchesCode = order.code.toLowerCase().includes(search.toLowerCase());
+    const matchesPriority =
+      priorityFilter === "" || order.priority === priorityFilter;
+
+    return matchesCode && matchesPriority;
+  });
+
   return (
     <>
       <div>
@@ -86,6 +96,23 @@ function App() {
           <button type="submit">Aggiungi ordine</button>
         </form>
 
+        <div>
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Cerca per codice"
+          />
+          <select
+            value={priorityFilter}
+            onChange={(e) => setPriorityFilter(e.target.value)}
+          >
+            <option value="">Tutte le priorità</option>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Bassa">Bassa</option>
+          </select>
+        </div>
+
         {loading && <p>Caricamento ordini</p>}
 
         {error && <p>Errore: {error}</p>}
@@ -102,7 +129,7 @@ function App() {
           </thead>
 
           <tbody>
-            {orders.map((order) => (
+            {visibleOrders.map((order) => (
               <tr key={order.id}>
                 <td>{order.code}</td>
                 <td>{order.productName}</td>
@@ -114,7 +141,6 @@ function App() {
                       handlePriorityChange(order, e.target.value)
                     }
                   >
-
                     <option value="Alta">Alta</option>
                     <option value="Media">Media</option>
                     <option value="Bassa">Bassa</option>
@@ -129,6 +155,7 @@ function App() {
             ))}
           </tbody>
         </table>
+        {!loading && visibleOrders.length === 0 && <p>Nessun ordine trovato</p>}
       </div>
     </>
   );
