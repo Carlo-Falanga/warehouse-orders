@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { createOrder, deleteOrder, getOrders, updateOrder } from "./api";
 import OrderForm from "./components/OrderForm";
 import OrderFilters from "./components/OrderFilters";
+import OrdersTable from "./components/OrdersTable";
+
+
+
 function App() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,44 +100,12 @@ function App() {
 
         {loading && <p>Caricamento ordini</p>}
 
-        <table>
-          <thead>
-            <tr>
-              <th>Codice</th>
-              <th>Prodotto</th>
-              <th>Quantita'</th>
-              <th>Priorita'</th>
-              <th>Azioni</th>
-            </tr>
-          </thead>
+        <OrdersTable
+          orders={visibleOrders}
+          onDelete={handleDelete}
+          onPriorityChange={handlePriorityChange}
+        />
 
-          <tbody>
-            {visibleOrders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.code}</td>
-                <td>{order.productName}</td>
-                <td>{order.quantity}</td>
-                <td>
-                  <select
-                    value={order.priority}
-                    onChange={(e) =>
-                      handlePriorityChange(order, e.target.value)
-                    }
-                  >
-                    <option value="Alta">Alta</option>
-                    <option value="Media">Media</option>
-                    <option value="Bassa">Bassa</option>
-                  </select>
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(order.id)}>
-                    Elimina
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
         {!loading && visibleOrders.length === 0 && <p>Nessun ordine trovato</p>}
       </div>
     </>
