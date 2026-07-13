@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createOrder, deleteOrder, getOrders, updateOrder } from "./api";
+import OrderForm from "./components/OrderForm";
 
 function App() {
   const [orders, setOrders] = useState([]);
@@ -84,17 +85,7 @@ function App() {
       <div>
         <h1>Ordini di magazzino</h1>
 
-        <form onSubmit={handleSubmit}>
-          <input name="code" placeholder="Codice" />
-          <input name="productName" placeholder="Prodotto" />
-          <input name="quantity" type="number" placeholder="Quantità" />
-          <select name="priority" defaultValue="Alta">
-            <option value="Alta">Alta</option>
-            <option value="Media">Media</option>
-            <option value="Bassa">Bassa</option>
-          </select>
-          <button type="submit">Aggiungi ordine</button>
-        </form>
+        <OrderForm onSubmit={handleSubmit} error={formError}/>
 
         <div>
           <input
@@ -114,8 +105,6 @@ function App() {
         </div>
 
         {loading && <p>Caricamento ordini</p>}
-
-        {error && <p>Errore: {error}</p>}
 
         <table>
           <thead>
