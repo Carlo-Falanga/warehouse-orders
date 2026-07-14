@@ -12,6 +12,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("");
 
+  // Carica gli ordini dal server quando il componente viene montato
   useEffect(() => {
     async function loadOrders() {
       try {
@@ -27,6 +28,7 @@ function App() {
     loadOrders();
   }, []);
 
+  // Funzione per gesitre l'invio del form di creazione di un nuovo ordine
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError(null);
@@ -49,6 +51,7 @@ function App() {
     }
   }
 
+  // Funzione per gestire l'eliminazione di un ordine
   async function handleDelete(id) {
     try {
       await deleteOrder(id);
@@ -58,6 +61,7 @@ function App() {
     }
   }
 
+  // Funzione per gestire il cambiamento della priorita' di un ordine
   async function handlePriorityChange(order, newPriority) {
     try {
       const updated = await updateOrder(order.id, {
@@ -74,6 +78,7 @@ function App() {
     }
   }
 
+  // Filtra gli ordini in base al codice e alla priorita' selezionata
   const visibleOrders = orders.filter((order) => {
     const matchesCode = order.code.toLowerCase().includes(search.toLowerCase());
     const matchesPriority =
