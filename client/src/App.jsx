@@ -4,8 +4,6 @@ import OrderForm from "./components/OrderForm";
 import OrderFilters from "./components/OrderFilters";
 import OrdersTable from "./components/OrdersTable";
 
-
-
 function App() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -85,9 +83,14 @@ function App() {
   });
 
   return (
-    <>
-      <div>
-        <h1>Ordini di magazzino</h1>
+    <div className="bg-light min-vh-100 py-4 py-md-5">
+      <div className="container" style={{ maxWidth: "960px" }}>
+        <header className="mb-4 text-center">
+          <h1 className="h3 fw-bold mb-1">Ordini di magazzino</h1>
+          <p className="text-muted mb-0">
+            Gestisci gli ordini, filtra per codice e imposta le priorità
+          </p>
+        </header>
 
         <OrderForm onSubmit={handleSubmit} error={formError} />
 
@@ -98,7 +101,18 @@ function App() {
           onPriorityChange={setPriorityFilter}
         />
 
-        {loading && <p>Caricamento ordini</p>}
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
+
+        {loading && (
+          <div className="d-flex align-items-center gap-2 text-muted py-4 justify-content-center">
+            <div className="spinner-border spinner-border-sm" role="status" />
+            <span>Caricamento ordini…</span>
+          </div>
+        )}
 
         <OrdersTable
           orders={visibleOrders}
@@ -106,9 +120,14 @@ function App() {
           onPriorityChange={handlePriorityChange}
         />
 
-        {!loading && visibleOrders.length === 0 && <p>Nessun ordine trovato</p>}
+        {!loading && visibleOrders.length === 0 && (
+          <div className="text-center text-muted py-5">
+            <i className="bi bi-inbox fs-1 d-block mb-2" />
+            <p className="mb-0">Nessun ordine trovato</p>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }
 
