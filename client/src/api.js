@@ -13,7 +13,8 @@ async function request(path, options) {
 
 async function parseError(res) {
   const body = await res.json();
-  const error = new Error(body.error);
+  const details = body.details?.map((detail) => detail.message).join(", ");
+  const error = new Error(details || body.error);
   error.details = body.details;
   return error;
 }
