@@ -5,6 +5,7 @@ import { createOrderSchema, updateOrderSchema } from '../schemas/order.schema.js
 
 const router = Router();
 
+// Definizione delle rotte per le operazioni CRUD
 router.get('/', ordersController.getAllOrders);
 router.post('/', validate(createOrderSchema), ordersController.createOrder);
 
