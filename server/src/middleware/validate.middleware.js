@@ -1,3 +1,4 @@
+// Middleware per la validazione dei dati in ingresso
 export function validate(schema) {
   return (req, res, next) => {
     try {
