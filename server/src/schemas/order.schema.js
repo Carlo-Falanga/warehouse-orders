@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Schema di validazione per la creazione e l'aggiornamento degli ordini
 export const createOrderSchema = z
   .object({
     code: z.string().trim().min(1, "code is required"),
