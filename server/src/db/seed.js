@@ -1,6 +1,6 @@
 import db from "./index.js";
 
-
+// Array di ordini fittizzi da inserire nel database
 const orders = [
   {
     code: "ORD-001",
@@ -29,11 +29,13 @@ const orders = [
   },
 ];
 
+// Query per inserire gli ordini nel database
 const insert = db.prepare(`
     INSERT OR IGNORE INTO orders (code, product_name, quantity, priority)
     VALUES (@code, @product_name, @quantity, @priority)
 `);
 
+// Funzione per iterare sugli ordini fittizzi e inserirli nel database
 const insertMany = db.transaction((rows) => {
   let inserted = 0;
 
@@ -45,5 +47,6 @@ const insertMany = db.transaction((rows) => {
   return inserted;
 });
 
+// Eseguo l'inserimento degli ordini fittizzi nel database
 const inserted = insertMany(orders);
 console.log(`Seed: ${inserted}/${orders.length} ordini inseriti.`);
