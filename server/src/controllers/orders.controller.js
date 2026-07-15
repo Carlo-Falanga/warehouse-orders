@@ -1,10 +1,12 @@
 import * as ordersRepository from "../repositories/orders.repository.js";
 
+// Funzione per validare e convertire l'id in un numero intero positivo
 function parseId(rawId) {
   const id = Number(rawId);
   return Number.isInteger(id) && id > 0 ? id : null;
 }
 
+// Funzioni per gestire le richieste HTTP
 export function getAllOrders(req, res) {
   const orders = ordersRepository.findAll();
   res.json(orders);
