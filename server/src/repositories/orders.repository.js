@@ -1,5 +1,6 @@
 import db from "../db/index.js";
 
+// Funzione per convertire la convenzione snake_case del database in camelCase di JavaScript
 function toOrder(row) {
   if (!row) return undefined;
   return {
@@ -12,6 +13,7 @@ function toOrder(row) {
   };
 }
 
+// Oggetto contenente le query SQL precompilate per le operazioni CRUD
 const statements = {
   findAll: db.prepare(`
         SELECT * FROM orders ORDER BY created_at DESC, id DESC
@@ -33,6 +35,7 @@ const statements = {
     `),
 };
 
+// Funzioni per eseguire le operazioni CRUD
 export function findAll() {
   return statements.findAll.all().map(toOrder);
 }
