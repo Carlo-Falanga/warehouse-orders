@@ -19,13 +19,14 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Route
+// Route orders
 app.use("/orders", ordersRouter);
 
 // Middleware per la gestione errori
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+// Avvio del server
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
