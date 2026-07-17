@@ -29,7 +29,7 @@ export default function OrdersTable({ orders, onDelete, onPriorityChange }) {
                 <td className="text-end">{order.quantity}</td>
                 <td>
                   <div className="d-flex align-items-center gap-2">
-                    <span className="badge rounded-pill text-bg-light border">
+                    <span className="badge rounded-pill text-bg-light border priority-badge">
                       {order.priority}
                     </span>
                     <select
