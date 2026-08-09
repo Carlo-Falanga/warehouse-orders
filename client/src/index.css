@@ -1,3 +1,128 @@
-.priority-badge {
-  min-width: 3.5rem;
+:root {
+  --wo-ink: #10262e;
+  --wo-ink-soft: #1c3b45;
+  --wo-accent: #0f6d7d;
+  --wo-accent-dark: #0b5763;
+  --wo-accent-rgb: 15, 109, 125;
+  --wo-canvas: #f5f7f8;
+  --wo-surface: #ffffff;
+  --wo-border: #e2e8ea;
+  --wo-text: #16242a;
+  --wo-muted: #5f7178;
+  --wo-alta: #b42318;
+  --wo-media: #9a6700;
+  --wo-bassa: #48606a;
+  --wo-sidebar-text: rgba(255, 255, 255, 0.72);
+  --wo-sidebar-dim: rgba(255, 255, 255, 0.55);
+
+  --bs-body-bg: var(--wo-canvas);
+  --bs-body-color: var(--wo-text);
+  --bs-border-color: var(--wo-border);
+  --bs-border-color-translucent: var(--wo-border);
+  --bs-border-radius: 0.5rem;
+  --bs-secondary-color: var(--wo-muted);
+  --bs-btn-focus-shadow-rgb: var(--wo-accent-rgb);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--wo-accent);
+  --bs-btn-border-color: var(--wo-accent);
+  --bs-btn-hover-bg: var(--wo-accent-dark);
+  --bs-btn-hover-border-color: var(--wo-accent-dark);
+  --bs-btn-active-bg: var(--wo-accent-dark);
+  --bs-btn-active-border-color: var(--wo-accent-dark);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--wo-accent);
+  box-shadow: 0 0 0 3px rgba(var(--wo-accent-rgb), 0.15);
+}
+
+.wo-sidebar {
+  background-color: var(--wo-ink);
+  color: var(--wo-sidebar-text);
+}
+
+.wo-sidebar .wo-label {
+  color: var(--wo-sidebar-dim);
+}
+
+.wo-nav {
+  --bs-nav-link-color: var(--wo-sidebar-text);
+  --bs-nav-link-hover-color: var(--wo-surface);
+  --bs-nav-pills-link-active-bg: var(--wo-ink-soft);
+}
+
+.wo-nav .nav-link:hover {
+  background-color: var(--wo-ink-soft);
+}
+
+.wo-card-header {
+  min-height: 4.25rem;
+}
+
+.wo-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--wo-muted);
+}
+
+.wo-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.wo-table th,
+.wo-table td {
+  padding: 0.75rem;
+  white-space: nowrap;
+}
+
+.wo-table > tbody > tr:last-child > td {
+  border-bottom-width: 0;
+}
+
+.wo-priority-select {
+  background-color: transparent;
+  border-color: transparent;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.wo-priority-select:hover {
+  background-color: var(--wo-surface);
+  border-color: var(--wo-border);
+}
+
+.wo-alta {
+  color: var(--wo-alta);
+}
+
+.wo-media {
+  color: var(--wo-media);
+}
+
+.wo-bassa {
+  color: var(--wo-bassa);
+}
+
+.wo-btn-icon {
+  color: var(--wo-muted);
+  transition: color 0.15s ease;
+}
+
+.wo-btn-icon:hover {
+  color: var(--wo-alta);
+}
+
+@media (min-width: 992px) {
+  .wo-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex: 0 0 15rem;
+  }
 }
