@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { createOrder, deleteOrder, getOrders, updateOrder } from "./api";
+import Sidebar from "./components/Sidebar";
 import OrderForm from "./components/OrderForm";
-import OrderFilters from "./components/OrderFilters";
+import OrderSearch from "./components/OrderSearch";
 import OrdersTable from "./components/OrdersTable";
 
 function App() {
@@ -88,50 +89,64 @@ function App() {
   });
 
   return (
-    <div className="bg-light min-vh-100 py-4 py-md-5">
-      <div className="container" style={{ maxWidth: "960px" }}>
-        <header className="mb-4 text-center">
-          <h1 className="h3 fw-bold mb-1">Ordini di magazzino</h1>
-          <p className="text-muted mb-0">
-            Gestisci gli ordini, filtra per codice e imposta le priorità
-          </p>
-        </header>
+    <div className="d-flex flex-column flex-lg-row min-vh-100">
+      <Sidebar
+        orders={orders}
+        priorityFilter={priorityFilter}
+        onPriorityChange={setPriorityFilter}
+      />
 
-        <OrderForm onSubmit={handleSubmit} error={formError} />
+      <main className="flex-grow-1 px-3 px-lg-5 py-4 py-lg-5">
+        <div className="mx-auto" style={{ maxWidth: "1180px" }}>
+          <header className="mb-4">
+            <h1 className="h4 fw-semibold mb-1">Ordini di magazzino</h1>
+            <p className="text-body-secondary mb-0">
+              Gestisci gli ordini, filtra per codice e imposta le priorità
+            </p>
+          </header>
 
-        <OrderFilters
-          search={search}
-          priorityFilter={priorityFilter}
-          onSearchChange={setSearch}
-          onPriorityChange={setPriorityFilter}
-        />
+          {error && (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          )}
 
-        {error && (
-          <div className="alert alert-danger" role="alert">
-            {error}
+          <div className="row g-4">
+            <div className="col-12 col-xl-8">
+              <div className="card shadow-sm overflow-hidden">
+                <div className="card-header wo-card-header d-flex align-items-center bg-transparent border-bottom py-3">
+                  <OrderSearch
+                    search={search}
+                    onSearchChange={setSearch}
+                    visibleCount={visibleOrders.length}
+                    totalCount={orders.length}
+                  />
+                </div>
+
+                {loading ? (
+                  <div className="d-flex align-items-center justify-content-center gap-2 text-body-secondary py-5">
+                    <div
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                    />
+                    <span>Caricamento ordini…</span>
+                  </div>
+                ) : (
+                  <OrdersTable
+                    orders={visibleOrders}
+                    onDelete={handleDelete}
+                    onPriorityChange={handlePriorityChange}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="col-12 col-xl-4">
+              <OrderForm onSubmit={handleSubmit} error={formError} />
+            </div>
           </div>
-        )}
-
-        {loading && (
-          <div className="d-flex align-items-center gap-2 text-muted py-4 justify-content-center">
-            <div className="spinner-border spinner-border-sm" role="status" />
-            <span>Caricamento ordini…</span>
-          </div>
-        )}
-
-        <OrdersTable
-          orders={visibleOrders}
-          onDelete={handleDelete}
-          onPriorityChange={handlePriorityChange}
-        />
-
-        {!loading && visibleOrders.length === 0 && (
-          <div className="text-center text-muted py-5">
-            <i className="bi bi-inbox fs-1 d-block mb-2" />
-            <p className="mb-0">Nessun ordine trovato</p>
-          </div>
-        )}
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
